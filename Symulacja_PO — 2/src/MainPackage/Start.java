@@ -20,26 +20,20 @@ public class Start extends JPanel implements ActionListener {
     public double max_speed = 0;
     double time = 0;
 
-    int i = 0;
-
     ArrayList<Car> cars = new ArrayList<>();
     ArrayList<Motor> motors = new ArrayList<>();
 
-    Buttons buttons = new Buttons();
-
     JFrame frame = new JFrame("Symulacja");
-    JTextField car_max_speed = new JTextField();
-    JTextField motor_max_speed = new JTextField();
-    JButton button = new JButton("Apply");
+//    JTextField car_max_speed = new JTextField();
+//    JTextField motor_max_speed = new JTextField();
+    JTextField newFrequency = new JTextField();
+    JButton buttonSlow = new JButton("Slow");
+    JButton buttonMedium = new JButton("Medium");
+    JButton buttonFast = new JButton("Fast");
 
-    String CarSpeedInput = "";
-    String MotorSpeedInput = "";
+    JPanel panel = new JPanel();
 
-//    Timer timer1 = new Timer(17, new ActionListener() {
-//        public void actionPerformed(ActionEvent e) {
-//            repaint();
-//        }
-//    });
+    String newFrequencyInput = "";
 
     public Start() {
 
@@ -59,12 +53,16 @@ public class Start extends JPanel implements ActionListener {
 
     public void paint(Graphics window) {
 
+        panel.setBounds(100, 100, 1000, 1000);
+        panel.setBackground(new Color(210, 217, 228));
+        panel.setBorder(null);
+        panel.setVisible(true);
+        frame.add(panel);
+
         paintButtons(window);
         paintSimulation(window);
 
         time++;
-
-//        buttons.paint(window);
     }
 
     public void paintSimulation(Graphics g){
@@ -82,54 +80,91 @@ public class Start extends JPanel implements ActionListener {
         g.drawString(String.format("Car max speed: %.2f",Math.abs(max_speed)), 950, 70);
     }
 
-    public void paintButtons(Graphics g){
-        super.paint(g);
+    public void paintButtons(Graphics h){
+//        panel.paint(h);
 
-        this.add(car_max_speed);
-        car_max_speed.setBounds(820, 70, 50, 25);
-        car_max_speed.addActionListener(this);
-        car_max_speed.setVisible(true);
+//        this.add(car_max_speed);
+//        car_max_speed.setBounds(820, 70, 50, 25);
+//        car_max_speed.addActionListener(this);
+//        car_max_speed.setVisible(true);
+//
+//        motor_max_speed.setBounds(820, 100, 50, 25);
+//        this.add(motor_max_speed);
+//        motor_max_speed.addActionListener(this);
+//        motor_max_speed.setVisible(true);
 
-        motor_max_speed.setBounds(820, 100, 50, 25);
-        this.add(motor_max_speed);
-        motor_max_speed.addActionListener(this);
-        motor_max_speed.setVisible(true);
+        buttonSlow.setBounds(820,130,90,25);
+        panel.add(buttonSlow);
+        buttonSlow.addActionListener(this);
+        buttonSlow.setVisible(true);
 
-        button.setBounds(820,130,90,25);
-        this.add(button);
-        button.addActionListener(this);
-        button.setVisible(true);
+        buttonMedium.setBounds(920,130,90,25);
+        this.add(buttonMedium);
+        buttonMedium.addActionListener(this);
+        buttonMedium.setVisible(true);
+
+        buttonFast.setBounds(1020,130,90,25);
+        this.add(buttonFast);
+        buttonFast.addActionListener(this);
+        buttonFast.setVisible(true);
+
+        newFrequency.setBounds(820, 90, 50, 25);
+        this.add(newFrequency);
+        newFrequency.addActionListener(this);
+        newFrequency.setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         repaint();
-//        time++;
 
-        if(e.getSource()==button){
-            cars.get(i).turnLeft();
-            if(i<19){
-                i++;
-            }
-            else{
-                i=0;
-            }
-        }
-
-        if(e.getSource()== car_max_speed){
-            CarSpeedInput = car_max_speed.getText();
-            int SpeedInputNumber=Integer.parseInt(CarSpeedInput);
+        if(e.getSource()== buttonSlow){
             for(int i = 0; i < CAR_AMOUNT; i++){
-                cars.get(i).setMaxSpeed(SpeedInputNumber);
+                cars.get(i).setMaxSpeed(1.5);
             }
-            max_speed = SpeedInputNumber;
-        }
-        if(e.getSource()== motor_max_speed){
-            MotorSpeedInput = motor_max_speed.getText();
-            int SpeedInputNumber=Integer.parseInt(MotorSpeedInput);
             for(int i = 0; i < MOTOR_AMOUNT; i++){
-                motors.get(i).setMaxSpeed(SpeedInputNumber);
+                motors.get(i).setMaxSpeed(2);
             }
+        }
+
+        if(e.getSource()== buttonMedium){
+            for(int i = 0; i < CAR_AMOUNT; i++){
+                cars.get(i).setMaxSpeed(2.5);
+            }
+            for(int i = 0; i < MOTOR_AMOUNT; i++){
+                motors.get(i).setMaxSpeed(4);
+            }
+        }
+
+        if(e.getSource()== buttonFast){
+            for(int i = 0; i < CAR_AMOUNT; i++){
+                cars.get(i).setMaxSpeed(4);
+            }
+            for(int i = 0; i < MOTOR_AMOUNT; i++){
+                motors.get(i).setMaxSpeed(6);
+            }
+        }
+
+//        if(e.getSource()== car_max_speed){
+//            CarSpeedInput = car_max_speed.getText();
+//            int SpeedInputNumber=Integer.parseInt(CarSpeedInput);
+//            for(int i = 0; i < CAR_AMOUNT; i++){
+//                cars.get(i).setMaxSpeed(SpeedInputNumber);
+//            }
+//            max_speed = SpeedInputNumber;
+//        }
+//        if(e.getSource()== motor_max_speed){
+//            MotorSpeedInput = motor_max_speed.getText();
+//            int SpeedInputNumber=Integer.parseInt(MotorSpeedInput);
+//            for(int i = 0; i < MOTOR_AMOUNT; i++){
+//                motors.get(i).setMaxSpeed(SpeedInputNumber);
+//            }
+//        }
+
+        if(e.getSource()== newFrequency){
+            newFrequencyInput = newFrequency.getText();
+            int SpeedInputNumber=Integer.parseInt(newFrequencyInput);
+
         }
     }
 
